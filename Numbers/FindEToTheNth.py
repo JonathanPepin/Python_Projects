@@ -6,10 +6,27 @@ Positive test cases - all valid inputs
 Negative test cases - one under min, one over max, non-valid input (fails on letters)
 """
 
-from math import e
+from decimal import Decimal, getcontext
 
-stringe = str(e)
+
 decPlaces = 0 
-while (decPlaces < 1) or (decPlaces > (len(stringe))-2):
-    decPlaces = int(input("Enter the number of decimal places you want to generate PI up to between 1 and " + str((len(stringe))-2) + " : "))
-print (stringe[0:decPlaces+2])
+maxDecPlaces = 10000
+while (decPlaces < 1) or (decPlaces > maxDecPlaces):
+    decPlaces = int(input("Enter the number of decimal places you want to generate e up to between 1 and " + str(maxDecPlaces) + " : "))
+
+# Calculating e
+getcontext().prec = decPlaces + 1 # set the precision
+
+e = Decimal(0)
+f = Decimal(1)
+i = Decimal(1)
+
+while (True):
+    olde = e
+    e += Decimal(1) / f
+    if (e == olde):
+        break
+    f *= i
+    i += Decimal(1)  
+
+print(e)
